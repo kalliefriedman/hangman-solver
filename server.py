@@ -23,20 +23,21 @@ def play_game(email):
     guesses_left = decoded_response["guessesLeft"]
     letters_to_guess = "EARIOTNSLCUDPMHGBFYWKVXZJQ"
     counter = 0
-    while guesses_left > 0 and "_" in word:
+    msg = ""
+    while guesses_left > 0 and msg is not "Congrats! You have solved this hangman!":
         decoded_guess_response = make_guess(game_id, letters_to_guess[counter])
+        print decoded_guess_response
+        msg = decoded_guess_response["msg"]
         counter += 1
-        decoded_status_response = get_status(game_id)
-        word = decoded_status_response["word"]
         guesses_left = decoded_guess_response["guessesLeft"]
+        word = decoded_guess_response["word"]
         print word
 
-    if guesses_left:
-        print "You Won!"
+    if msg is not "Congrats! You have solved this hangman!":
+        print msg
         print "The word was " + word
     else:
-        print "Nice try, you didn't guess it. Here's how far you got."
-        print "The word was " + word
+        print msg
 
 email = raw_input("Enter your email to play: ")
 play_game(email)

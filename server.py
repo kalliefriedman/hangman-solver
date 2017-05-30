@@ -1,22 +1,18 @@
 import requests
 
 
-def get_status(game_id):
-    """Takes in game_id as a param and returns python dictionary containing response"""
-    response = requests.get("http://int-sys.usr.space/hangman/games/" + game_id)
-    return response.json()
-
-
 def make_guess(game_id, guess):
     """Takes in a game_id and guess as params and returns python dict containing response"""
     response = requests.post("http://int-sys.usr.space/hangman/games/"+game_id+"/guesses", data={'char': guess})
     return response.json()
 
+def start_game(email):
+    """Takes in an email as a string and returns python dict containing response"""
+    response = requests.post('http://int-sys.usr.space/hangman/games', data={'email': email})
+    return response.json()
 
 def play_game(email):
-    response = requests.post('http://int-sys.usr.space/hangman/games', data={'email': email})
-    # converting response from json object into python dictionary
-    decoded_response = response.json()
+    decoded_response = start_game(email)
 
     # setting inital variables from response
     game_id = decoded_response["gameId"]

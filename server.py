@@ -6,10 +6,12 @@ def make_guess(game_id, guess):
     response = requests.post("http://int-sys.usr.space/hangman/games/"+game_id+"/guesses", data={'char': guess})
     return response.json()
 
+
 def start_game(email):
     """Takes in an email as a string and returns python dict containing response"""
     response = requests.post('http://int-sys.usr.space/hangman/games', data={'email': email})
     return response.json()
+
 
 def play_game(email):
     decoded_response = start_game(email)
